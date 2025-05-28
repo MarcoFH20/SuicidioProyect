@@ -1,0 +1,314 @@
+/* Contenedor principal */
+.juegos-container {
+  padding: 1.5rem;
+  max-width: 900px;
+  margin: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9fafb;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.1);
+}
+
+/* Cabecera */
+.juegos-bienvenida {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #fffdf8;
+  margin: 20px auto 30px auto;
+  border-radius: 16px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+  max-width: 700px;
+}
+
+.juegos-bienvenida h2 {
+  color: #ff6600;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.juegos-bienvenida p {
+  color: #444;
+  font-size: 1.1rem;
+}
+
+/* Controles de búsqueda y filtro */
+.juegos-filtros {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.juegos-filtros input[type="text"],
+.juegos-filtros select {
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  width: 250px;
+}
+
+.juegos-filtros select {
+  width: 180px;
+}
+
+/* Botón crear */
+.btn-crear {
+  background-color: #0077cc;
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin-bottom: 25px;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+}
+
+.btn-crear:hover {
+  background-color: #005fa3;
+}
+
+/* Tarjetas de juegos */
+.juegos-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.juego-card {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  width: 280px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-align: center;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.juego-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.juego-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Botones editar y eliminar */
+.btn-editar, .btn-eliminar {
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.btn-editar {
+  background-color: #10b981;
+  margin-right: 10px;
+}
+
+.btn-editar:hover {
+  background-color: #0f9c6e;
+}
+
+.btn-eliminar {
+  background-color: #ef4444;
+}
+
+.btn-eliminar:hover {
+  background-color: #b91c1c;
+}
+
+/* Formularios */
+.form-crear-juego {
+  max-width: 550px;
+  margin: 30px auto;
+  padding: 30px 25px;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.form-crear-juego h3 {
+  margin-bottom: 25px;
+  text-align: center;
+  color: #0077cc;
+  font-size: 1.8rem;
+}
+
+.form-crear-juego label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 7px;
+  font-weight: 600;
+  color: #333;
+  font-size: 1.05rem;
+}
+
+.form-crear-juego input,
+.form-crear-juego textarea,
+.form-crear-juego select {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+.form-crear-juego input:focus,
+.form-crear-juego textarea:focus,
+.form-crear-juego select:focus {
+  border-color: #0077cc;
+  outline: none;
+}
+
+.form-crear-juego textarea {
+  min-height: 90px;
+}
+
+/* Botones de formulario */
+.btn-guardar, .btn-cancelar {
+  background-color: #0077cc;
+  border: none;
+  color: white;
+  padding: 12px 25px;
+  margin-top: 25px;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+}
+
+.btn-cancelar {
+  background-color: #6b7280;
+  margin-left: 15px;
+}
+
+.btn-guardar:hover {
+  background-color: #005fa3;
+}
+
+.btn-cancelar:hover {
+  background-color: #4b5563;
+}
+
+/* Botón volver */
+.btn-volver {
+  background-color: #0077cc;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin: 40px auto 0;
+  display: block;
+  transition: background-color 0.3s ease;
+  max-width: 250px;
+}
+
+.btn-volver:hover {
+  background-color: #005fa3;
+}
+
+/* Responsive: móviles */
+@media (max-width: 600px) {
+  .juegos-filtros {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .juegos-filtros input[type="text"],
+  .juegos-filtros select {
+    width: 100%;
+    max-width: none;
+  }
+
+  .btn-crear, .btn-volver {
+    width: 100%;
+    font-size: 1.2rem;
+    padding: 14px 0;
+  }
+
+  .btn-editar, .btn-eliminar {
+    width: 48%;
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+
+  .btn-cancelar {
+    margin-left: 0;
+    margin-top: 15px;
+    width: 100%;
+  }
+
+  .btn-guardar {
+    width: 100%;
+  }
+}
+
+/* Responsive: tablets y hasta 900px */
+@media (max-width: 900px) {
+  .juegos-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .juego-card {
+    width: auto;
+  }
+}
+
+/* Estilo input file */
+input[type="file"] {
+  border: 2px dashed #cbd5e1;
+  padding: 12px;
+  border-radius: 10px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #555;
+  background-color: #fafafa;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input[type="file"]:hover {
+  border-color: #0077cc;
+  background-color: #f0f8ff;
+}
+
+/* Contenedor del preview para mejor espacio */
+.preview-container {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Imagen preview */
+.preview-container img {
+  width: 140px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  border: 1px solid #ddd;
+}

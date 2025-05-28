@@ -1,0 +1,21 @@
+/* src/views/Reportes/Entradas.css */
+.entradas-bienvenida {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #fffdf8;
+  margin: 20px auto;
+  border-radius: 16px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+  max-width: 700px;
+}
+
+.entradas-bienvenida h2 {
+  color: #ff6600;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.entradas-bienvenida p {
+  color: #444;
+  font-size: 16px;
+}

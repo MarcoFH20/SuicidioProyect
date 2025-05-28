@@ -1,0 +1,66 @@
+.usuarios-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  background: #e0f0ff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+}
+
+.usuarios-tabla thead tr {
+  background-color: #1070c4;
+  color: white;
+  font-weight: bold;
+  text-align: left;
+}
+
+.usuarios-tabla th,
+.usuarios-tabla td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.usuarios-tabla tbody tr:nth-child(even) {
+  background-color: #f6faff;
+}
+
+.btn-editar {
+  background-color: #16a34a;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-editar:hover {
+  background-color: #13803d;
+}
+
+.btn-eliminar {
+  background-color: #dc2626;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-eliminar:hover {
+  background-color: #991b1b;
+}
+
+.select-estado {
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+}
+
+.texto-italico {
+  font-style: italic;
+  color: #999;
+}

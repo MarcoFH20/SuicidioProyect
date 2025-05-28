@@ -1,0 +1,62 @@
+/* src/views/Reportes/EscanearEntrada.css */
+
+.escaner-bienvenida {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #fffdf8;
+  margin: 20px auto;
+  border-radius: 16px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+  max-width: 700px;
+}
+
+.escaner-bienvenida h2 {
+  color: #ff6600;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.escaner-bienvenida p {
+  color: #444;
+  font-size: 16px;
+}
+
+#qr-reader {
+  width: 320px;
+  margin: 20px auto;
+  border: 2px dashed #ccc;
+  border-radius: 12px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.btn-activar,
+.btn-detener {
+  background-color: #0077cc;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 10px auto;
+  transition: background-color 0.3s ease;
+}
+
+.btn-activar:hover {
+  background-color: #005fa3;
+}
+
+.btn-detener {
+  background-color: #ff4d4d;
+}
+
+.btn-detener:hover {
+  background-color: #d63636;
+}
+
+.mensaje-estado {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 20px;
+}

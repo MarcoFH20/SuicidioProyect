@@ -1,0 +1,87 @@
+/* src/views/Admin/Reportes/EscanearEntradaAdmin.css */
+
+.admin-escaner-container {
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #fffdf8;
+  margin: 30px auto;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+  max-width: 700px;
+}
+
+.admin-escaner-container h2 {
+  color: #ff6600;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.mensaje-estado {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 16px auto;
+  color: #333;
+}
+
+/* ID específico para evitar conflictos */
+#qr-reader-admin {
+  width: 320px;
+  max-width: 100%;
+  margin: 20px auto;
+  border: 2px dashed #ccc;
+  border-radius: 12px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.btn-activar,
+.btn-detener {
+  background-color: #0077cc;
+  color: white;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 10px 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-activar:hover {
+  background-color: #005fa3;
+}
+
+.btn-detener {
+  background-color: #ff4d4d;
+}
+
+.btn-detener:hover {
+  background-color: #d63636;
+}
+
+/* Responsivo */
+@media (max-width: 500px) {
+  .admin-escaner-container {
+    padding: 30px 10px;
+  }
+
+  #qr-reader-admin {
+    width: 100%;
+  }
+}
+
+.btn-volver-inicio {
+  background-color: #6c757d;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.btn-volver-inicio:hover {
+  background-color: #5a6268;
+}

@@ -1,0 +1,65 @@
+/* src/views/Juegos/Juegos.css */
+.juegos-bienvenida {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #fffdf8;
+  margin: 20px auto;
+  border-radius: 16px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+  max-width: 700px;
+}
+
+.juegos-bienvenida h2 {
+  color: #ff6600;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.juegos-bienvenida p {
+  color: #444;
+  font-size: 16px;
+}
+
+.btn-volver-inicio {
+  background-color: #0077cc;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-volver-inicio:hover {
+  background-color: #005fa3;
+}
+
+.juegos-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.juego-card {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  width: 280px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  text-align: center;
+}
+
+.juego-card:hover {
+  transform: scale(1.02);
+}
+
+.juego-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}

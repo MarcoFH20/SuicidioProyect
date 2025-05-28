@@ -1,0 +1,257 @@
+/* Usuarios.css */
+
+.usuarios-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 0 20px 40px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #1a1a1a;
+  background-color: #f7fbff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 80, 180, 0.15);
+}
+
+.usuarios-container h2 {
+  text-align: center;
+  color: #005bb5;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.usuarios-container p {
+  text-align: center;
+  font-size: 1.05rem;
+  color: #0077cc;
+  margin-bottom: 24px;
+}
+
+.input-busqueda {
+  width: 100%;
+  padding: 12px 18px;
+  font-size: 1rem;
+  border: 2px solid #9ec7ff;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  transition: border-color 0.3s ease;
+}
+
+.input-busqueda:focus {
+  border-color: #005bb5;
+  outline: none;
+  box-shadow: 0 0 8px #80aaffaa;
+}
+
+.btn-crear,
+.btn-guardar,
+.btn-cancelar,
+.btn-editar,
+.btn-eliminar,
+.btn-volver {
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+  border: none;
+  padding: 10px 16px;
+  font-size: 1rem;
+  user-select: none;
+}
+
+.btn-crear {
+  background-color: #0077cc;
+  color: white;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.btn-crear:hover:not(:disabled) {
+  background-color: #005bb5;
+  box-shadow: 0 4px 12px #005bb533;
+}
+
+.btn-crear:disabled {
+  background-color: #a1c9ff;
+  cursor: not-allowed;
+}
+
+.form-usuario {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 20px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #eaf4ff;
+  border-radius: 10px;
+  box-shadow: 0 0 8px #a6c8ff88;
+}
+
+.form-usuario input[type="text"],
+.form-usuario input[type="email"],
+.form-usuario select {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1.8px solid #a7c8ff;
+  font-size: 1rem;
+  color: #004080;
+  transition: border-color 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-usuario input[type="text"]:focus,
+.form-usuario input[type="email"]:focus,
+.form-usuario select:focus {
+  border-color: #005bb5;
+  outline: none;
+  box-shadow: 0 0 8px #6ba0ffbb;
+}
+
+.form-usuario button {
+  grid-column: span 2;
+  width: 100%;
+}
+
+.btn-guardar {
+  background-color: #005bb5;
+  color: white;
+}
+
+.btn-guardar:hover:not(:disabled) {
+  background-color: #003f7f;
+  box-shadow: 0 4px 12px #003f7f88;
+}
+
+.btn-cancelar {
+  background-color: #cce4ff;
+  color: #004080;
+  margin-top: 8px;
+}
+
+.btn-cancelar:hover:not(:disabled) {
+  background-color: #99c1ff;
+}
+
+.btn-guardar:disabled,
+.btn-cancelar:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.usuarios-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+  font-size: 0.95rem;
+  box-shadow: 0 0 10px #cce3ffbb;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.usuarios-table thead {
+  background-color: #0077cc;
+  color: white;
+  font-weight: 600;
+}
+
+.usuarios-table th,
+.usuarios-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e6f0ff;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.usuarios-table tbody tr:hover {
+  background-color: #dbe9ff;
+}
+
+.btn-editar,
+.btn-eliminar {
+  font-size: 0.9rem;
+  padding: 6px 12px;
+  margin-right: 6px;
+}
+
+.btn-editar {
+  background-color: #3399ff;
+  color: white;
+  border: 1.5px solid #2980ff;
+}
+
+.btn-editar:hover:not(:disabled) {
+  background-color: #1a73e8;
+  box-shadow: 0 0 6px #1a73e888;
+}
+
+.btn-eliminar {
+  background-color: #ff6666;
+  color: white;
+  border: 1.5px solid #e84545;
+}
+
+.btn-eliminar:hover:not(:disabled) {
+  background-color: #e23030;
+  box-shadow: 0 0 6px #e2303088;
+}
+
+.btn-editar:disabled,
+.btn-eliminar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-volver {
+  background-color: #004080;
+  color: white;
+  width: 160px;
+  margin: 0 auto;
+  display: block;
+  font-weight: 600;
+  padding: 10px 0;
+  border-radius: 10px;
+  border: none;
+}
+
+.btn-volver:hover {
+  background-color: #002c59;
+  box-shadow: 0 0 8px #002c5988;
+}
+
+.btn-exportar {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-exportar:hover {
+  background-color: #357ABD;
+}
+
+.paginacion {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.paginacion button {
+  background-color: #4a90e2;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+}
+
+.paginacion button:disabled {
+  background-color: #a0a0a0;
+  cursor: not-allowed;
+}

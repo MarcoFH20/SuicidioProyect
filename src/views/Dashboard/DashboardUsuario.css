@@ -1,0 +1,64 @@
+/* src/views/Dashboard/DashboardUsuario.css */
+
+.usuario-dashboard {
+  padding: 40px 20px;
+  min-height: 80vh;
+  background-color: #fffaf3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.usuario-bienvenida {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.usuario-bienvenida h2 {
+  font-size: 2rem;
+  color: #ff7700;
+}
+
+.usuario-bienvenida h2 span {
+  color: #333;
+  font-weight: 600;
+}
+
+.usuario-bienvenida p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-top: 10px;
+}
+
+.usuario-modulos {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.usuario-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 25px;
+  width: 250px;
+  text-align: center;
+  transition: transform 0.3s;
+  cursor: default;
+}
+
+.usuario-card:hover {
+  transform: translateY(-5px);
+}
+
+.usuario-card h3 {
+  color: #ff7700;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.usuario-card p {
+  color: #555;
+  font-size: 1rem;
+}
