@@ -1,0 +1,62 @@
+/* src/views/ReservasEmpleado.css */
+
+.reservas-empleado {
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.usuario-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.usuario-header h2 {
+  font-size: 2rem;
+  color: #333;
+}
+
+.usuario-header p {
+  color: #555;
+}
+
+select {
+  padding: 8px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+.tabla-reservas {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: #e6f0ff; /* azul suave como en Usuarios */
+  border: 1px solid #c2dbff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tabla-reservas th, .tabla-reservas td {
+  padding: 10px;
+  border: 1px solid #c2dbff;
+  text-align: center;
+}
+
+.tabla-reservas th {
+  background-color: #c2dbff;
+  color: #000;
+}
+
+.tabla-reservas tr:nth-child(even) {
+  background-color: #f2f8ff;
+}
+
+button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}

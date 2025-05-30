@@ -1,0 +1,29 @@
+.tabla-reservas {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tabla-reservas th,
+.tabla-reservas td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.tabla-reservas thead {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.tabla-reservas tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.tabla-reservas tr:hover {
+  background-color: #e6f7ff;
+}

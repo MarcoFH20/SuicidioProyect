@@ -11,6 +11,7 @@ import AutosChoconesImg from '@/assets/AutosChocones.jpg';
 import CarruselImg from '@/assets/Carrusel.jpg';
 import TrenecitoImg from '@/assets/Trenecito.jpg';
 import TazasVoladorasImg from '@/assets/tazas-voladoras.jpg';
+import DragoncitoImg from '@/assets/Dragoncito.jpg'
 
 import { subirImagenDesdeFrontend } from '@/services/uploadService';
 
@@ -21,6 +22,7 @@ const imagenesMuestra = {
   "Carrusel": CarruselImg,
   "Trenecito": TrenecitoImg,
   "Tazas Voladoras": TazasVoladorasImg,
+  "Dragoncito": DragoncitoImg,
   "default": MontañaRusaImg,
 };
 

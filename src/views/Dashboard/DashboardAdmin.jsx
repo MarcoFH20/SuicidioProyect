@@ -64,14 +64,19 @@ const DashboardAdmin = () => {
           <p>Revisa estadísticas, entradas y escaneos.</p>
         </div>
 
-        <div className="admin-card" onClick={() => navigate('/reportes/escaner-admin')}>
-          <h3>🔍 Escáner Admin</h3>
-          <p>Accede al módulo de validación de boletos desde el rol administrativo.</p>
+        <div className="admin-card" onClick={() => navigate('/admin/entradas')}>
+          <h3>🧾 Entradas</h3>
+          <p>Consulta el historial de boletos validados por tipo, fecha y estado.</p>
         </div>
 
         <div className="admin-card" onClick={() => navigate('/Admin/juegos')}>
           <h3>🎮 Juegos</h3>
           <p>Gestiona los juegos activos y operadores asignados.</p>
+        </div>
+
+        <div className="admin-card" onClick={() => navigate('/Admin/reservas')}>
+          <h3>🏢 Reservas</h3>
+          <p>Gestiona todas las reservas de salones con filtros y exportación.</p>
         </div>
 
         <div className="admin-card" onClick={cerrarSesion}>

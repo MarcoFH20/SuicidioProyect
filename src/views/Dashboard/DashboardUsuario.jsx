@@ -29,9 +29,9 @@ const DashboardUsuario = () => {
           <p>Escanea los boletos de ingreso con código QR.</p>
         </div>
 
-        <div className="usuario-card" onClick={() => navigate('/reportes/entradas')}>
-          <h3>🎟️ Entradas</h3>
-          <p>Consulta el historial de entradas validadas.</p>
+        <div className="usuario-card" onClick={() => navigate('/reservas')}>
+          <h3>🏠 Reservas</h3>
+          <p>Consulta y gestiona las reservas de salones.</p>
         </div>
 
         <div className="usuario-card" onClick={cerrarSesion}>

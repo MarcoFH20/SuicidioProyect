@@ -1,9 +1,10 @@
 // Archivo: EscanerJuego.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Swal from 'sweetalert2';
-import { Html5QrcodeScanner } from 'html5-qrcode';
+import { Html5Qrcode } from 'html5-qrcode';
 import { collection, query, where, getDocs, doc, updateDoc, getDoc, addDoc } from 'firebase/firestore';
 import { db } from '@/services/firebase';
+import { useNavigate } from 'react-router-dom';
 
 function EscanerJuego({ juegoId }) {
   const [mensaje, setMensaje] = useState('');
@@ -12,76 +13,65 @@ function EscanerJuego({ juegoId }) {
   const [capacidadMax, setCapacidadMax] = useState(0);
   const [capacidadMin, setCapacidadMin] = useState(0);
   const [ocupados, setOcupados] = useState(0);
+  const scannerRef = useRef(null);
   const [scannerActivo, setScannerActivo] = useState(false);
-  const [historial, setHistorial] = useState([]);
-  const [encargado, setEncargado] = useState(null);
-  let scanner = null;
+  const [duracion, setDuracion] = useState(0);
+  const [progreso, setProgreso] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     cargarAsientos();
-    cargarHistorial();
-    cargarEncargado();
-    return () => {
-      if (scanner) {
-        scanner.clear().catch(() => {});
-      }
-    };
+    return () => detenerScanner();
   }, []);
 
-  const iniciarScanner = () => {
-    const qrContainerId = 'qr-reader-juego';
-    const qrContainer = document.getElementById(qrContainerId);
-    if (qrContainer && qrContainer.innerHTML.trim() !== '') return;
-
-    scanner = new Html5QrcodeScanner(qrContainerId, { fps: 10, qrbox: { width: 250, height: 250 } }, false);
-    scanner.render(handleScanSuccess, () => {});
-    setScannerActivo(true);
-  };
-
   const cargarAsientos = async () => {
-    const juegoRef = doc(db, 'juegos', juegoId);
-    const snap = await getDoc(juegoRef);
-    const juego = snap.data();
-
-    if (juego.estado === 'mantenimiento') {
-      setMensaje('🛠️ Este juego está en mantenimiento.');
-      setColor('gray');
-      return;
-    }
-
-    const asientosArray = Object.entries(juego.asientos || {}).map(([clave, estado]) => ({ numero: clave.replace('A', ''), estado }));
+    const juegoSnap = await getDoc(doc(db, 'juegos', juegoId));
+    const juego = juegoSnap.data();
+    const asientosArray = Object.entries(juego.asientos || {}).map(([clave, estado]) => ({ numero: clave, estado }));
     setAsientos(asientosArray);
     setCapacidadMax(juego.capacidad_maxima);
     setCapacidadMin(juego.capacidad_minima);
+    setDuracion(juego.duracion_ciclo || 5);
     setOcupados(asientosArray.filter(a => a.estado === 'ocupado').length);
   };
 
-  const cargarHistorial = async () => {
-    const historialRef = collection(db, 'juegos', juegoId, 'historial_ciclos');
-    const querySnapshot = await getDocs(historialRef);
-    const data = querySnapshot.docs.map(doc => doc.data());
-    setHistorial(data);
+  const iniciarScanner = () => {
+    if (scannerActivo) return;
+    const qrCodeScanner = new Html5Qrcode("qr-reader-juego");
+    scannerRef.current = qrCodeScanner;
+    qrCodeScanner.start(
+      { facingMode: "environment" },
+      { fps: 10, qrbox: { width: 250, height: 250 } },
+      handleScanSuccess,
+      () => {}
+    ).then(() => {
+      setScannerActivo(true);
+    }).catch(console.error);
   };
 
-  const cargarEncargado = async () => {
-    const usuariosRef = collection(db, 'usuarios');
-    const q = query(usuariosRef, where('juego_asignado', '==', juegoId));
-    const res = await getDocs(q);
-    if (!res.empty) {
-      const encargado = res.docs[0].data();
-      setEncargado(`${encargado.nombres} ${encargado.apellidos}`);
+  const detenerScanner = () => {
+    if (scannerRef.current) {
+      scannerRef.current.stop().then(() => {
+        scannerRef.current.clear();
+        setScannerActivo(false);
+      }).catch(console.error);
     }
   };
 
   const handleScanSuccess = async (decodedText) => {
-    if (ocupados >= capacidadMax) {
-      setMensaje('🚫 Capacidad máxima alcanzada. No se permiten más ingresos.');
-      setColor('gray');
+    detenerScanner();
+    let datosQR;
+
+    try {
+      datosQR = JSON.parse(decodedText);
+    } catch {
+      setMensaje('❌ QR no válido');
+      setColor('crimson');
       return;
     }
 
-    const boletosRef = collection(db, 'boletos');
-    const q = query(boletosRef, where('serie', '==', decodedText));
+    const serie = datosQR.serie;
+    const q = query(collection(db, 'boletos'), where('serie', '==', serie));
     const res = await getDocs(q);
 
     if (res.empty) {
@@ -94,29 +84,51 @@ function EscanerJuego({ juegoId }) {
     const data = boletoDoc.data();
 
     if (data.estado !== 'usado') {
-      setMensaje('⚠️ El boleto debe estar validado en la entrada del parque');
+      setMensaje('⚠️ Primero debe validar su boleto en la entrada');
       setColor('orange');
       return;
     }
 
-    const juegoRef = doc(db, 'juegos', juegoId);
-    const juegoSnap = await getDoc(juegoRef);
+    if (!data.acceso_juegos || data.acceso_juegos.toLowerCase() !== 'sí') {
+      setMensaje('⛔ Este boleto no permite subir a juegos');
+      setColor('gray');
+      return;
+    }
+
+    if (data.juegos_maximos !== 'ilimitados') {
+      const restantes = parseInt(data.juegos_maximos);
+      if (restantes <= 0 || isNaN(restantes)) {
+        setMensaje('🚫 Este boleto ya no tiene juegos disponibles');
+        setColor('gray');
+        return;
+      }
+      await updateDoc(doc(db, 'boletos', boletoDoc.id), {
+        juegos_maximos: restantes - 1
+      });
+    }
+
+    const juegoSnap = await getDoc(doc(db, 'juegos', juegoId));
     const juego = juegoSnap.data();
 
-    const claveLibre = Object.entries(juego.asientos).find(([_, estado]) => estado === 'libre');
-    if (!claveLibre) {
+    const libre = Object.entries(juego.asientos).find(([_, v]) => v === 'libre');
+    if (!libre) {
       setMensaje('❌ No hay asientos disponibles');
       setColor('gray');
       return;
     }
 
-    const [clave, _] = claveLibre;
+    const [clave, _] = libre;
     const nuevosAsientos = { ...juego.asientos, [clave]: 'ocupado' };
-
-    await updateDoc(juegoRef, { asientos: nuevosAsientos });
+    await updateDoc(doc(db, 'juegos', juegoId), { asientos: nuevosAsientos });
     cargarAsientos();
-    setMensaje(`✅ Asiento ${clave} asignado correctamente.`);
+
+    setMensaje(`✅ Acceso al juego concedido. Asiento ${clave} asignado.`);
     setColor('green');
+
+    setTimeout(() => {
+      setMensaje('');
+      iniciarScanner();
+    }, 3000);
   };
 
   const iniciarCiclo = async () => {
@@ -125,68 +137,89 @@ function EscanerJuego({ juegoId }) {
     const juego = snap.data();
     const ocupadosCount = Object.values(juego.asientos).filter(v => v === 'ocupado').length;
 
-    if (ocupadosCount >= Number(juego.capacidad_minima)) {
-      const nuevosAsientos = {};
-      Object.keys(juego.asientos).forEach(key => {
-        nuevosAsientos[key] = 'libre';
-      });
-
-      const nuevosCiclos = (juego.ciclos_actuales || 0) + 1;
-
-      await updateDoc(juegoRef, {
-        asientos: nuevosAsientos,
-        ciclos_actuales: nuevosCiclos
-      });
-
-      await addDoc(collection(db, 'juegos', juegoId, 'historial_ciclos'), {
-        fecha_inicio: new Date().toISOString(),
-        cantidad_personas: ocupadosCount,
-        usuario: 'admin'
-      });
-
-      await addDoc(collection(db, 'reportes'), {
-        tipo: 'ciclo_iniciado',
-        modulo: 'juegos',
-        fecha: new Date().toISOString(),
-        nombreJuego: juego.nombre,
-        cantidad_personas: ocupadosCount,
-        nuevo_ciclo: nuevosCiclos,
-        usuario: 'admin'
-      });
-
-      cargarAsientos();
-      setMensaje(`✔️ Ciclo iniciado correctamente con ${ocupadosCount} personas.`);
-      setColor('green');
-      cargarHistorial();
-    } else {
-      const min = Number(juego.capacidad_minima);
-      setMensaje(`❌ Se requieren al menos ${min} personas para iniciar el ciclo.`);
-      setColor('red');
+    if (ocupadosCount < Number(juego.capacidad_minima)) {
       Swal.fire({
         icon: 'warning',
         title: 'No se puede iniciar el ciclo',
-        text: `Se requieren al menos ${min} personas.`,
+        text: `Se requieren al menos ${juego.capacidad_minima} personas.`,
         confirmButtonColor: '#f97316'
       });
+      return;
     }
+
+    setProgreso(0);
+    let progresoTemp = 0;
+    const incremento = 100 / (duracion * 10);
+    const timer = setInterval(() => {
+      progresoTemp += incremento;
+      setProgreso(progresoTemp);
+      if (progresoTemp >= 100) {
+        clearInterval(timer);
+        ejecutarCiclo(juegoRef, juego, ocupadosCount);
+      }
+    }, 100);
+  };
+
+  const ejecutarCiclo = async (juegoRef, juego, ocupadosCount) => {
+    const nuevosAsientos = {};
+    Object.keys(juego.asientos).forEach(key => {
+      nuevosAsientos[key] = 'libre';
+    });
+
+    const nuevosCiclos = (juego.ciclos_actuales || 0) + 1;
+    const maxCiclos = juego.mantenimiento_cada || 9999;
+    const nuevoEstado = nuevosCiclos >= maxCiclos ? 'mantenimiento' : juego.estado;
+
+    await updateDoc(juegoRef, {
+      asientos: nuevosAsientos,
+      ciclos_actuales: nuevosCiclos,
+      estado: nuevoEstado
+    });
+
+    await addDoc(collection(db, 'juegos', juegoId, 'historial_ciclos'), {
+      fecha_inicio: new Date().toISOString(),
+      cantidad_personas: ocupadosCount,
+      usuario: 'admin'
+    });
+
+    setProgreso(0);
+    cargarAsientos();
+    setMensaje('');
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Ciclo finalizado',
+      text: `Ciclo completado con ${ocupadosCount} personas.`,
+      confirmButtonColor: '#10b981'
+    });
   };
 
   return (
-    <div>
-      <h3>Escáner de Juego</h3>
-      <p><strong>Ocupados:</strong> {ocupados} / {capacidadMax}</p>
-      {encargado && <p><strong>Encargado:</strong> {encargado}</p>}
+    <section className="escaner-bienvenida">
+      <h2>🎮 Escáner de Juegos</h2>
+      <p>Valida boletos que tienen acceso a juegos y asigna asiento disponible.</p>
 
-      {!scannerActivo && (
-        <button onClick={iniciarScanner} style={{ padding: '6px 14px', marginBottom: '1rem', backgroundColor: '#10b981', color: 'white', border: 'none', borderRadius: '6px' }}>
-          📷 Activar cámara
-        </button>
+      {!scannerActivo ? (
+        <button className="btn-activar" onClick={iniciarScanner}>Activar escáner</button>
+      ) : (
+        <button className="btn-detener" onClick={detenerScanner}>Detener escáner</button>
       )}
 
-      <div id="qr-reader-juego" style={{ marginBottom: '1rem' }}></div>
-      <p style={{ color, fontWeight: 'bold' }}>{mensaje}</p>
+      <div id="qr-reader-juego" style={{ width: '300px', margin: '1rem auto' }}></div>
+      {mensaje && <p className="mensaje-estado" style={{ color }}>{mensaje}</p>}
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '1rem' }}>
+      <div style={{ marginTop: '20px' }}>
+        <button
+          onClick={iniciarCiclo}
+          style={{ padding: '10px 20px', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
+          🎢 Iniciar Ciclo
+        </button>
+        <div style={{ marginTop: '10px', width: '100%', backgroundColor: '#eee', height: '10px', borderRadius: '5px' }}>
+          <div style={{ width: `${progreso}%`, backgroundColor: '#10b981', height: '10px', borderRadius: '5px', transition: 'width 0.1s linear' }}></div>
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '2rem', justifyContent: 'center' }}>
         {asientos.map((a, i) => (
           <div key={i} style={{
             padding: '6px 12px',
@@ -195,30 +228,12 @@ function EscanerJuego({ juegoId }) {
             color: 'white',
             fontWeight: 'bold'
           }}>
-            A{a.numero}: {a.estado}
+            {a.numero}: {a.estado}
           </div>
         ))}
       </div>
-
-      <button onClick={iniciarCiclo} style={{ padding: '8px 16px', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
-        🎢 Iniciar ciclo
-      </button>
-
-      {historial.length > 0 && (
-        <div style={{ marginTop: '2rem' }}>
-          <h4>📊 Historial de Ciclos</h4>
-          <ul>
-            {historial.map((h, i) => (
-              <li key={i}>
-                {new Date(h.fecha_inicio).toLocaleString()} — {h.cantidad_personas} personas
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
+    </section>
   );
 }
 
 export default EscanerJuego;
-  
